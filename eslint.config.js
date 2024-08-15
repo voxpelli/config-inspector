@@ -16,6 +16,8 @@ export default nuxt()
     ),
   )
   .append({
+    // Helps validating the formatting of vendor prefixed module names
+    name: '@eslint/config-inspector/allow-console',
     files: ['src/**/*.ts'],
     rules: {
       'no-console': 'off',

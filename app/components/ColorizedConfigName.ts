@@ -8,7 +8,18 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const parts = computed(() => props.name?.split(/([:/])/g).filter(Boolean))
+    const parts = computed(() => {
+      const splitted = props.name?.split(/([:/])/g).filter(Boolean)
+
+      const [scope, scopeSeparator, moduleName, ...rest] = splitted || []
+
+      if (scope.startsWith('@') && scopeSeparator && moduleName) {
+        return [scope + scopeSeparator + moduleName, ...rest]
+      }
+
+      return splitted
+    })
+
     return () => {
       if (parts.value) {
         return h('span', parts.value.map((part, i) => h(
